@@ -51,6 +51,14 @@ public:
     int get_max_threads();
     LogLevel get_log_level();
     Algorithm get_algorithm();
+
+    void update_interval(int);
+    void update_noti_enabled(bool);
+    void update_log_file(string);
+    void update_on_change_command(string);
+    void update_max_threads(int);
+    void update_log_level(LogLevel);
+    void update_algorithm(Algorithm);
 };
 
 #endif 
