@@ -19,7 +19,7 @@ enum  LogLevel {
 enum  Algorithm {
     MD5,    
     SHA256,
-    none
+    NONE
 };
 class Config {
 private:
@@ -28,7 +28,6 @@ private:
     int interval;
     bool noti_enabled;
     string log_file;
-    // string algorithm;
     string on_change_command;
     int max_threads;
     LogLevel log_level;

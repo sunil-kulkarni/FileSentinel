@@ -37,7 +37,7 @@ void Config::parse(const string& file) {
         string algo = config["checksum"]["algorithm"].as<string>();
         if (algo == "MD5") {algorithm = Algorithm::MD5;}
         else if (algo == "SHA256") {algorithm = Algorithm::SHA256;}
-        else {algorithm = Algorithm::none;}
+        else {algorithm = Algorithm::NONE;}
     }
 
     if (config["alerts"]["on_change_command"]) {
