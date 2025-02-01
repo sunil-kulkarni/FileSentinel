@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <yaml-cpp/yaml.h>
 
 using namespace std;
