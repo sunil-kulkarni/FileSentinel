@@ -21,6 +21,9 @@ public:
     /* Computes the MD5 checksum of a given file and stores it in 'str'. 
        Returns true if successful, false if an error occurs (e.g., file not found). */
     static bool computeChecksum_md(const std::string& filePath, std::string* str);
+
+    /*Reads the string from filepath and returns the string*/
+    bool none(const std::string &filePath, std::string *str);
 };
 
 #endif // CHECKSUM_HPP
