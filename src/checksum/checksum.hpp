@@ -12,6 +12,9 @@ using namespace std::filesystem;
 #ifndef CHECKSUM_HPP
 #define CHECKSUM_HPP
 
+using namespace std;
+using namespace std::filesystem;
+
 class Checksum {
 private:
   Config *config;
@@ -35,7 +38,7 @@ public:
 
   //Compares the computed SHA-256 checksum of a file with a given checksum. 
   //Returns true if they match, false otherwise
-  bool compareChecksum(const path&, const string *);
+  bool compare_checksum(const path&, const string *);
 
   //destructor
   ~Checksum();
