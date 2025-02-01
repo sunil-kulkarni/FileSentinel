@@ -29,26 +29,16 @@ private:
 
 public:
   Checksum(Config *); //constructor
-
-  //Computes the SHA-256 checksum of a given file and stores it in 'str'. 
-  //Returns true if successful, false if an error occurs (e.g., file not found)
-  bool computeChecksum_sha(const std::string& filePath, std::string* str);
-
-  //Computes the MD5 checksum of a given file and stores it in 'str'. 
-  //Returns true if successful, false if an error occurs (e.g., file not found)
-  bool computeChecksum_md(const std::string& filePath, std::string* str);
-
-  //Reads the string from filepath and returns the string
-  bool none(const std::string &filePath, std::string *str);
+  
+  //computes checksum based on algo in config
+  bool compute_checksum(const path&, string *);
 
   //Compares the computed SHA-256 checksum of a file with a given checksum. 
   //Returns true if they match, false otherwise
-  bool compareChecksum(const std::string& filePath, const std::string* givenChecksum);
+  bool compareChecksum(const path&, const string *);
 
   //destructor
   ~Checksum();
-  //computes checksum based on algo in config
-  bool compute_checksum(const path&, string *);
 
 };
 
