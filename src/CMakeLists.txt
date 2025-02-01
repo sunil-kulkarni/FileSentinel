@@ -10,4 +10,5 @@ target_link_libraries(FileSentinel PRIVATE TUI config)
 
 target_include_directories(FileSentinel PRIVATE
   ${CMAKE_SOURCE_DIR}/src/TUI
+  ${CMAKE_SOURCE_DIR}/src/config
 )
