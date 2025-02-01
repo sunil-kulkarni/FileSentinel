@@ -53,13 +53,13 @@ bool Checksum::computeChecksum_sha(const std::string &filePath, std::string *str
 }
 
 // Function to compare a given checksum with the computed SHA-256 checksum of a file
-bool Checksum::compareChecksum(const std::string& filePath, const std::string *givenChecksum) {
+bool Checksum::compareChecksum(const std::string& filePath, const std::string* givenChecksum) {
     std::string computedChecksum;
     return computeChecksum_sha(filePath, &computedChecksum) && computedChecksum == *givenChecksum;
 }
 
 // Function to compute the MD5 checksum of a given file
-static bool computeChecksum_md(const std::string &filePath, std::string *str) {
+bool Checksum::computeChecksum_md(const std::string &filePath, std::string *str) {
     // Open the file in binary mode
     std::ifstream file(filePath, std::ios::binary);
     if (!file) {
