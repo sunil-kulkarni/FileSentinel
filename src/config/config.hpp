@@ -56,13 +56,13 @@ public:
   Algorithm get_algorithm();
 
   //setters for configuration parameters
-  void update_interval(int);
-  void update_notification_level(NotificationLevel);
-  void update_log_file(string);
-  void update_on_change_command(string);
-  void update_max_threads(int);
-  void update_log_level(LogLevel);
-  void update_algorithm(Algorithm);
+  bool update_interval(int);
+  bool update_notification_level(NotificationLevel);
+  bool update_log_file(string);
+  bool update_on_change_command(string);
+  bool update_max_threads(int);
+  bool update_log_level(LogLevel);
+  bool update_algorithm(Algorithm);
 
   ~Config(); //destructor
   

@@ -104,28 +104,33 @@ Algorithm Config::get_algorithm() {
 }
 
 //setter methods to update configuration parameters
-void Config::update_interval(int new_interval) {
+bool Config::update_interval(int new_interval) {
   interval = new_interval;
+  return true;
 }
 
 //setter method to update the notification setting
-void Config::update_notification_level(NotificationLevel new_notification_level) {
+bool Config::update_notification_level(NotificationLevel new_notification_level) {
   notification_level = new_notification_level;
+  return true;
 }
 
 //setter method to update the log file path
-void Config::update_log_file(string new_log_file) {
+bool Config::update_log_file(string new_log_file) {
   log_file = new_log_file;
+  return true;
 }
 
 //setter method to update the log level
-void Config::update_log_level(LogLevel new_log_level) {
+bool Config::update_log_level(LogLevel new_log_level) {
   log_level = new_log_level;
+  return true;
 }
 
 //setter method to update the hashing algorithm
-void Config::update_algorithm(Algorithm new_algorithm) {
+bool Config::update_algorithm(Algorithm new_algorithm) {
   algorithm = new_algorithm;
+  return true;
 }
 
 Config::~Config() {}
