@@ -93,4 +93,37 @@ Algorithm Config::get_algorithm() {
     return algorithm;
 }
 
+// Setter methods to update configuration parameters
+void Config::update_interval(int new_interval) {
+    interval = new_interval;
+}
 
+// Setter method to update the notification setting
+void Config::update_noti_enabled(bool enabled) {
+    noti_enabled = enabled;
+}
+
+// Setter method to update the log file path
+void Config::update_log_file(string new_log_file) {
+    log_file = new_log_file;
+}
+
+// Setter method to update the command to execute on changes
+void Config::update_on_change_command(string new_command) {
+    on_change_command = new_command;
+}
+
+// Setter method to update the max number of threads
+void Config::update_max_threads(int new_max_threads) {
+    max_threads = new_max_threads;
+}
+
+// Setter method to update the log level
+void Config::update_log_level(LogLevel new_log_level) {
+    log_level = new_log_level;
+}
+
+// Setter method to update the hashing algorithm
+void Config::update_algorithm(Algorithm new_algorithm) {
+    algorithm = new_algorithm;
+}
