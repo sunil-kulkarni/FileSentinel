@@ -2,6 +2,7 @@
 #define DATABASE_HPP
 
 #include <string>
+#include <filesystem>
 #include <sqlite3.h>
 
 class Database {
@@ -11,13 +12,14 @@ private:
     void initDB();
 
 public:
-    // Constructor
-    Database(const std::string& dbPath = "checksums.db");
-
+    //Constructor & Destructor
+    explicit Database(const std::string& dbPath = "checksums.db");
     ~Database();
-    int saveData(const std::string& filePath, const std::string& hash, const std::string& timestamp);
 
+    //Database operations
+    int saveData(const std::string& filePath, const std::string& hash, const std::string& timestamp);
     void retrieveDataByID(int id);
+    void retrieveDataByPath(const std::filesystem::path& path);
 };
 
-#endif
+#endif //DATABASE_HPP
