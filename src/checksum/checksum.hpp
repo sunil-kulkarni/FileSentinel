@@ -14,7 +14,8 @@
 
 class Checksum {
 public:
-    bool computeChecksum(const std::string& filePath, std::string* str);
+    bool computeChecksum_sha(const std::string& filePath, std::string* str);
     bool compareChecksum(const std::string& filePath, const std::string *);
+    static bool computeChecksum_md(const std::string &filePath, std::string *str);
 };
 #endif
