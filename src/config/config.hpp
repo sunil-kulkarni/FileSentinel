@@ -34,6 +34,14 @@ private:
     Algorithm algorithm; 
 public:
     void parse(const string&);
+    vector<path> get_paths();
+    int get_interval();
+    bool get_noti_enabled();
+    string get_log_file();
+    string get_on_change_command();
+    int get_max_threads();
+    LogLevel get_log_level();
+    Algorithm get_algorithm();
 };
 
 #endif
