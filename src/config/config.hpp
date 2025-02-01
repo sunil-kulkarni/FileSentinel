@@ -9,18 +9,24 @@
 
 using namespace std;
 
-using namespace std::filesystem;
+using namespace std::filesystem; 
+
+// Enumeration for logging levels
 enum  LogLevel {
     INFO,  
     WARN, 
     ERROR, 
     DEBUG  
 };
+
+// Enumeration for supported hashing algorithms
 enum  Algorithm {
     MD5,    
     SHA256,
     NONE
 };
+
+// Configuration class for managing settings from a YAML file
 class Config {
 private:
     YAML::Node config;
@@ -33,7 +39,10 @@ private:
     LogLevel log_level;
     Algorithm algorithm; 
 public:
+    // Parses the configuration file and loads settings
     void parse(const string&);
+
+    // Getters for configuration parameters
     vector<path> get_paths();
     int get_interval();
     bool get_noti_enabled();
@@ -44,5 +53,5 @@ public:
     Algorithm get_algorithm();
 };
 
-#endif
+#endif 
 
