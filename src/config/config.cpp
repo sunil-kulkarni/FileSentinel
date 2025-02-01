@@ -28,10 +28,11 @@ void Config::parse(const path& file) {
 
   //updates notification_level if exists
   if (yaml["notifications"]["level"]) {
-      string noti = yaml["notifications"]["level"].as<string>();
-      if (noti == "ALL") {
+      string notification = yaml["notifications"]["level"].as<string>();
+      std::transform(notification.begin(), notification.end(), notification.begin(), ::tolower);
+      if (notification == "all") {
           notification_level = NotificationLevel::ALL;
-      } else if (noti == "CHANGES") {
+      } else if (notification == "changes") {
           notification_level = NotificationLevel::CHANGES;
       } else {
           notification_level = NotificationLevel::NO_NOTIFICATION;
@@ -46,13 +47,14 @@ void Config::parse(const path& file) {
   //updates log_level if exists
   if (yaml["logging"]["log_level"]) {
     string level = yaml["logging"]["log_level"].as<string>();
-    if (level == "INFO") {
+    std::transform(level.begin(), level.end(), level.begin(), ::tolower);
+    if (level == "info") {
       log_level = LogLevel::INFO;
-    } else if (level == "WARN") {
+    } else if (level == "warn") {
       log_level = LogLevel::WARN;
-    } else if (level == "ERROR") {
+    } else if (level == "error") {
       log_level = LogLevel::ERROR;
-    } else if (level == "DEBUG") {
+    } else if (level == "debug") {
       log_level = LogLevel::DEBUG;
     }
   }
@@ -60,11 +62,14 @@ void Config::parse(const path& file) {
   //updates algorithm if exists
   if (yaml["checksum"]["algorithm"]) {
     string algo = yaml["checksum"]["algorithm"].as<string>();
-    if (algo == "MD5") {
+    std::transform(algo.begin(), algo.end(), algo.begin(), ::tolower);
+    if (algo == "md5") {
       algorithm = Algorithm::MD5;
-    } else if (algo == "SHA256") {
+    } else if (algo == "sha256") {
       algorithm = Algorithm::SHA256;
-    } else {algorithm = Algorithm::NONE;}
+    } else {
+      algorithm = Algorithm::NONE;
+    }
   }
 }
 
