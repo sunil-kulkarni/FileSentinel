@@ -3,46 +3,44 @@
 #include <filesystem>
 #include <vector>
 #include <string>
-#include <fstream>
-#include <iostream>
 #include <yaml-cpp/yaml.h>
 
 using namespace std;
 
 using namespace std::filesystem; 
 
-// Enumeration for logging levels
-enum  LogLevel {
-  INFO,  
-  WARN, 
-  ERROR, 
-  DEBUG  
+//enumeration for logging levels
+enum LogLevel {
+  INFO, //normal log level
+  WARN, //log only warning
+  ERROR, //log only error
+  DEBUG, //log only debug info
 };
 
-// Enumeration for supported hashing algorithms
-enum  Algorithm {
-  MD5,  
-  SHA256,
-  NONE
+//enumeration for supported hashing algorithms
+enum Algorithm {
+  MD5, //use MD5 algo for hashing
+  SHA256, //use SHA256 algo for hashing
+  NONE, //no hashing
 };
 
-// Configuration class for managing settings from a YAML file
+//configuration class for managing settings from a YAML file
 class Config {
 private:
-  YAML::Node config;
-  vector<path> paths;
-  int interval;
-  bool noti_enabled;
-  string log_file;
-  string on_change_command;
-  int max_threads;
-  LogLevel log_level;
-  Algorithm algorithm; 
+  YAML::Node yaml; //YAML object
+  vector<path> paths; //vector of paths to check
+  int interval; //time interval
+  bool notification_enabled; //is notification enabled
+  path log_file; //path to log file
+  LogLevel log_level; //log level
+  Algorithm algorithm; //algo used for hashing
+ 
 public:
-  // Parses the configuration file and loads settings
-  void parse(const string&);
+  Config(); //constructor
+ 
+  void parse(const path&); //parse given yaml
 
-  // Getters for configuration parameters
+  //getters for configuration parameters
   vector<path> get_paths();
   int get_interval();
   bool get_noti_enabled();
@@ -52,6 +50,7 @@ public:
   LogLevel get_log_level();
   Algorithm get_algorithm();
 
+  //setters for configuration parameters
   void update_interval(int);
   void update_noti_enabled(bool);
   void update_log_file(string);
@@ -59,16 +58,9 @@ public:
   void update_max_threads(int);
   void update_log_level(LogLevel);
   void update_algorithm(Algorithm);
+
+  ~Config(); //destructor
   
-  Config() {
-  interval = 0;
-  noti_enabled = false;
-  log_file = "";
-  on_change_command = "";
-  max_threads = 0;
-  log_level = LogLevel::INFO;
-  algorithm = Algorithm::NONE;
-  }
 };
 
 #endif 

@@ -7,8 +7,9 @@ include(FetchContent)
 FetchContent_Declare(
   yaml-cpp
   GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-  GIT_TAG master # Can be a tag (yaml-cpp-x.x.x), a commit hash, or a branch name (master)
+  GIT_TAG master
 )
 FetchContent_MakeAvailable(yaml-cpp)
 
-target_link_libraries(config PUBLIC yaml-cpp::yaml-cpp) # The library or executable that require yaml-cpp library
+target_link_libraries(config PUBLIC yaml-cpp::yaml-cpp)
+
