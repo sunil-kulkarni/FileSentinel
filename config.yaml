@@ -22,10 +22,3 @@ checksum:
   # Choose checksum algorithm for file comparison: "md5", "sha256", or "none"
   algorithm: "sha256"
 
-alerts:
-  # Command to run when a file change is detected
-  on_change_command: "notify-send 'File changed'"
-
-performance:
-  # Maximum number of worker threads for monitoring
-  max_threads: 4
