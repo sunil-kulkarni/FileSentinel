@@ -45,13 +45,7 @@ bool Checksum::computeChecksum(const std::string &filePath, std::string *str) {
 }
 
 
-bool compareChecksum(const std::string& filePath, const std::string& givenChecksum) {
+bool Checksum::compareChecksum(const std::string& filePath, const std::string *givenChecksum) {
     std::string computedChecksum;
-    Checksum::computeChecksum(filePath, &computedChecksum);
-
-    if (computedChecksum == givenChecksum) {
-        return true;
-    } else {
-        return false;
-    }
+    return computeChecksum(filePath, &computedChecksum) && computedChecksum == *givenChecksum;
 }

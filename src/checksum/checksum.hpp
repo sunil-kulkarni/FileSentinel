@@ -15,6 +15,6 @@
 class Checksum {
 public:
     bool computeChecksum(const std::string& filePath, std::string* str);
+    bool compareChecksum(const std::string& filePath, const std::string *);
 };
-
 #endif
