@@ -10,17 +10,29 @@
 using namespace std;
 
 using namespace std::filesystem;
+enum  LogLevel {
+    INFO,  
+    WARN, 
+    ERROR, 
+    DEBUG  
+};
+enum  Algorithm {
+    MD5,    
+    SHA256,
+    none
+};
 class Config {
 private:
     YAML::Node config;
     vector<path> paths;
-    int interval = 0;
-    bool noti_enabled = false;
-    string log_file = "";
-    string log_level = "";
-    string algorithm = "";
-    string on_change_command = "";
-    int max_threads = 1;
+    int interval;
+    bool noti_enabled;
+    string log_file;
+    // string algorithm;
+    string on_change_command;
+    int max_threads;
+    LogLevel log_level;
+    Algorithm algorithm; 
 public:
     void parse(const string&);
 };

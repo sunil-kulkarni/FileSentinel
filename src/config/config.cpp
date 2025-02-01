@@ -25,14 +25,20 @@ void Config::parse(const string& file) {
 
 
     if (config["logging"]["log_level"]) {
-        log_level = config["logging"]["log_level"].as<string>();
+        string level = config["logging"]["log_level"].as<string>();
+        if (level == "INFO") {log_level = LogLevel::INFO;}
+        else if (level == "WARN") {log_level = LogLevel::WARN;}
+        else if (level == "ERROR") {log_level = LogLevel::ERROR;}
+        else if (level == "DEBUG") {log_level = LogLevel::DEBUG;}
     }
 
 
     if (config["checksum"]["algorithm"]) {
-        algorithm = config["checksum"]["algorithm"].as<string>();
+        string algo = config["checksum"]["algorithm"].as<string>();
+        if (algo == "MD5") {algorithm = Algorithm::MD5;}
+        else if (algo == "SHA256") {algorithm = Algorithm::SHA256;}
+        else {algorithm = Algorithm::none;}
     }
-
 
     if (config["alerts"]["on_change_command"]) {
         on_change_command = config["alerts"]["on_change_command"].as<string>();
