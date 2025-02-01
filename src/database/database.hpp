@@ -1,9 +1,13 @@
-#ifndef DATABASE_HPP
-#define DATABASE_HPP
-
+#include <cstdio>
 #include <string>
 #include <filesystem>
 #include <sqlite3.h>
+
+#ifndef DATABASE_HPP
+#define DATABASE_HPP
+
+using namespace std;
+using namespace std::filesystem;
 
 class Database {
 private:
@@ -13,13 +17,13 @@ private:
 
 public:
     //Constructor & Destructor
-    explicit Database(const std::string& dbPath = "checksums.db");
+    Database(const path&);
     ~Database();
 
     //Database operations
-    int saveData(const std::string& filePath, const std::string& hash, const std::string& timestamp);
-    void retrieveDataByID(int id);
-    void retrieveDataByPath(const std::filesystem::path& path);
+    int saveData(const path&, const string&, const string&);
+    void retrieveDataByID(int id, path *, string *, string *);
+    int retrieveDataByPath(const path&, string *, string *);
 };
 
-#endif //DATABASE_HPP
+#endif

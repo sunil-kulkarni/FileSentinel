@@ -19,7 +19,7 @@ void Database::initDB() {
 }
 
 //Constructor: Opens the SQLite database and initializes it
-Database::Database(const std::string& dbPath) {
+Database::Database(const path& dbPath) {
     if (sqlite3_open(dbPath.c_str(), &db) != SQLITE_OK) {
         std::cerr << "Error opening database: " << sqlite3_errmsg(db) << std::endl;
     } else {
@@ -33,7 +33,7 @@ Database::~Database() {
 }
 
 //Method to save data (file path, hash and timestamp) into the database
-int Database::saveData(const std::string& filePath, const std::string& hash, const std::string& timestamp) {
+int Database::saveData(const path& filePath, const string& hash, const string& timestamp) {
     const char* insertSQL =
         "INSERT INTO checksums (filepath, hash, timestamp) VALUES (?, ?, ?) "
         "ON CONFLICT(filepath) DO UPDATE SET hash = excluded.hash, timestamp = excluded.timestamp "
@@ -62,7 +62,7 @@ int Database::saveData(const std::string& filePath, const std::string& hash, con
 }
 
 //Method to retrieve file details from the database using the ID
-void Database::retrieveDataByID(int id) {
+void Database::retrieveDataByID(int id, path *path, string *hash_, string *timestamp_) {
     const char* selectSQL = "SELECT filepath, hash, timestamp FROM checksums WHERE id = ?;";
     sqlite3_stmt* stmt;
 
@@ -76,9 +76,12 @@ void Database::retrieveDataByID(int id) {
             const char* timestamp = (const char*)sqlite3_column_text(stmt, 2);
 
             //Print retrieved values
-            std::cout << "File Path: " << filePath << std::endl;
-            std::cout << "Hash: " << hash << std::endl;
-            std::cout << "Timestamp: " << timestamp << std::endl;
+            /*std::cout << "File Path: " << filePath << std::endl;*/
+            /*std::cout << "Hash: " << hash << std::endl;*/
+            /*std::cout << "Timestamp: " << timestamp << std::endl;*/
+            *path = filePath;
+            *hash_ = hash;
+            *timestamp_ = timestamp;
         } else {
             std::cerr << "No record found with ID: " << id << std::endl;
         }
@@ -90,7 +93,7 @@ void Database::retrieveDataByID(int id) {
 }
 
 //Method to retrieve file details from the database using the file path
-void Database::retrieveDataByPath(const std::filesystem::path& path) {
+int Database::retrieveDataByPath(const path& path, string *hash_, string *timestamp_) {
     const char* selectSQL = "SELECT filepath, hash, timestamp FROM checksums WHERE filepath = ?;";
     sqlite3_stmt* stmt;
 
@@ -100,14 +103,17 @@ void Database::retrieveDataByPath(const std::filesystem::path& path) {
 
         if (sqlite3_step(stmt) == SQLITE_ROW) {
             //Retrieve values from the result row
-            const char* filePath = (const char*)sqlite3_column_text(stmt, 0);
+            /*const char* filePath = (const char*)sqlite3_column_text(stmt, 0);*/
             const char* hash = (const char*)sqlite3_column_text(stmt, 1);
             const char* timestamp = (const char*)sqlite3_column_text(stmt, 2);
 
             //Print retrieved values
-            std::cout << "File Path: " << filePath << std::endl;
-            std::cout << "Hash: " << hash << std::endl;
-            std::cout << "Timestamp: " << timestamp << std::endl;
+            /*std::cout << "File Path: " << filePath << std::endl;*/
+            /*std::cout << "Hash: " << hash << std::endl;*/
+            /*std::cout << "Timestamp: " << timestamp << std::endl;*/
+            *hash_ = hash;
+            *timestamp_ = timestamp;
+
         } else {
             std::cerr << "No record found for path: " << filePathStr << std::endl;
         }
@@ -116,4 +122,5 @@ void Database::retrieveDataByPath(const std::filesystem::path& path) {
     }
 
     sqlite3_finalize(stmt);  //Free the statement
+    return 0;
 }
