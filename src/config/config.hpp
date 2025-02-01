@@ -24,13 +24,18 @@ enum Algorithm {
   NONE, //no hashing
 };
 
+enum NotificationLevel {
+  ALL, //notify for all changes
+  CHANGES, //notify only for changes
+  NO_NOTIFICATION, //no notification
+};
 //configuration class for managing settings from a YAML file
 class Config {
 private:
   YAML::Node yaml; //YAML object
   vector<path> paths; //vector of paths to check
   int interval; //time interval
-  bool notification_enabled; //is notification enabled
+  NotificationLevel notification_level; //notification level
   path log_file; //path to log file
   LogLevel log_level; //log level
   Algorithm algorithm; //algo used for hashing
@@ -43,7 +48,7 @@ public:
   //getters for configuration parameters
   vector<path> get_paths();
   int get_interval();
-  bool get_noti_enabled();
+  NotificationLevel get_notification_level();
   string get_log_file();
   string get_on_change_command();
   int get_max_threads();
@@ -52,7 +57,7 @@ public:
 
   //setters for configuration parameters
   void update_interval(int);
-  void update_noti_enabled(bool);
+  void update_notification_level(NotificationLevel);
   void update_log_file(string);
   void update_on_change_command(string);
   void update_max_threads(int);
@@ -63,5 +68,4 @@ public:
   
 };
 
-#endif 
-
+#endif

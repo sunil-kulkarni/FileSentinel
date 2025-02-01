@@ -3,7 +3,7 @@
 //assigns default values
 Config::Config() {
   interval = 360;
-  notification_enabled = false;
+  notification_level = NotificationLevel::ALL;
   log_file = "";
   log_level = LogLevel::INFO;
   algorithm = Algorithm::NONE;
@@ -26,9 +26,16 @@ void Config::parse(const path& file) {
     interval = yaml["interval"]["check_interval"].as<int>();
   }
 
-  //updates notification_enabled if exists
-  if (yaml["notifications"]["enabled"]) {
-    notification_enabled = yaml["notifications"]["enabled"].as<bool>();
+  //updates notification_level if exists
+  if (yaml["notifications"]["level"]) {
+      string noti = yaml["notifications"]["level"].as<string>();
+      if (noti == "ALL") {
+          notification_level = NotificationLevel::ALL;
+      } else if (noti == "CHANGES") {
+          notification_level = NotificationLevel::CHANGES;
+      } else {
+          notification_level = NotificationLevel::NO_NOTIFICATION;
+      }
   }
 
   //updates log_file if exists
@@ -71,9 +78,9 @@ int Config::get_interval() {
   return interval;
 }
 
-//getter method to check if notifications are enabled
-bool Config::get_noti_enabled() {
-  return notification_enabled;
+//getter method to check if notifications are level
+NotificationLevel Config::get_notification_level() {
+  return notification_level;
 }
 
 //getter method to retrieve the log file path
@@ -97,8 +104,8 @@ void Config::update_interval(int new_interval) {
 }
 
 //setter method to update the notification setting
-void Config::update_noti_enabled(bool enabled) {
-  notification_enabled = enabled;
+void Config::update_notification_level(NotificationLevel new_notification_level) {
+  notification_level = new_notification_level;
 }
 
 //setter method to update the log file path
@@ -117,4 +124,3 @@ void Config::update_algorithm(Algorithm new_algorithm) {
 }
 
 Config::~Config() {}
-
