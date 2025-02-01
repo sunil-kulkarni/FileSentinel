@@ -29,6 +29,7 @@ enum NotificationLevel {
   CHANGES, //notify only for changes
   NO_NOTIFICATION, //no notification
 };
+
 //configuration class for managing settings from a YAML file
 class Config {
 private:
