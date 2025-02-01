@@ -1,15 +1,15 @@
 #ifndef CONFIG_HPP
 #define CONFIG_HPP
-#include <filesystem>// For handling file system paths
-#include <vector>// For using std::vector
-#include <string>// For using std::string
-#include <fstream>// For file handling operations
-#include <iostream>// For input/output operations
-#include <yaml-cpp/yaml.h>// For parsing YAML configuration files
+#include <filesystem>
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <yaml-cpp/yaml.h>
 
 using namespace std;
 
-using namespace std::filesystem; // Allows direct use of filesystem classes
+using namespace std::filesystem; 
 
 // Enumeration for logging levels
 enum  LogLevel {
@@ -53,5 +53,5 @@ public:
     Algorithm get_algorithm();
 };
 
-#endif // CONFIG_HPP
+#endif 
 
