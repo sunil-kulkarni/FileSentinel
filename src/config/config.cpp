@@ -50,3 +50,36 @@ void Config::parse(const string& file) {
     }
 }
 
+vector<path> Config::get_paths() {
+    return paths;
+}
+
+int Config::get_interval() {
+    return interval;
+}
+
+bool Config::get_noti_enabled() {
+    return noti_enabled;
+}
+
+string Config::get_log_file() {
+    return log_file;
+}
+
+string Config::get_on_change_command() {
+    return on_change_command;
+}
+
+int Config::get_max_threads() {
+    return max_threads;
+}
+
+LogLevel Config::get_log_level() {
+    return log_level;
+}
+
+Algorithm Config::get_algorithm() {
+    return algorithm;
+}
+
+
