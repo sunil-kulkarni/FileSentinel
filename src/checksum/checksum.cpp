@@ -43,3 +43,15 @@ bool Checksum::computeChecksum(const std::string &filePath, std::string *str) {
 
     return true;
 }
+
+
+bool compareChecksum(const std::string& filePath, const std::string& givenChecksum) {
+    std::string computedChecksum;
+    Checksum::computeChecksum(filePath, &computedChecksum);
+
+    if (computedChecksum == givenChecksum) {
+        return true;
+    } else {
+        return false;
+    }
+}
