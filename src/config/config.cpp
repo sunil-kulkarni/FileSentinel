@@ -3,7 +3,7 @@
 //assigns default values
 Config::Config() {
   interval = 360;
-  notification_enabled = false;
+  notification_level = NotificationLevel::ALL;
   log_file = "";
   log_level = LogLevel::INFO;
   algorithm = Algorithm::NONE;
@@ -26,9 +26,17 @@ void Config::parse(const path& file) {
     interval = yaml["interval"]["check_interval"].as<int>();
   }
 
-  //updates notification_enabled if exists
-  if (yaml["notifications"]["enabled"]) {
-    notification_enabled = yaml["notifications"]["enabled"].as<bool>();
+  //updates notification_level if exists
+  if (yaml["notifications"]["level"]) {
+      string notification = yaml["notifications"]["level"].as<string>();
+      std::transform(notification.begin(), notification.end(), notification.begin(), ::tolower);
+      if (notification == "all") {
+          notification_level = NotificationLevel::ALL;
+      } else if (notification == "changes") {
+          notification_level = NotificationLevel::CHANGES;
+      } else {
+          notification_level = NotificationLevel::NO_NOTIFICATION;
+      }
   }
 
   //updates log_file if exists
@@ -39,13 +47,14 @@ void Config::parse(const path& file) {
   //updates log_level if exists
   if (yaml["logging"]["log_level"]) {
     string level = yaml["logging"]["log_level"].as<string>();
-    if (level == "INFO") {
+    std::transform(level.begin(), level.end(), level.begin(), ::tolower);
+    if (level == "info") {
       log_level = LogLevel::INFO;
-    } else if (level == "WARN") {
+    } else if (level == "warn") {
       log_level = LogLevel::WARN;
-    } else if (level == "ERROR") {
+    } else if (level == "error") {
       log_level = LogLevel::ERROR;
-    } else if (level == "DEBUG") {
+    } else if (level == "debug") {
       log_level = LogLevel::DEBUG;
     }
   }
@@ -53,11 +62,14 @@ void Config::parse(const path& file) {
   //updates algorithm if exists
   if (yaml["checksum"]["algorithm"]) {
     string algo = yaml["checksum"]["algorithm"].as<string>();
-    if (algo == "MD5") {
+    std::transform(algo.begin(), algo.end(), algo.begin(), ::tolower);
+    if (algo == "md5") {
       algorithm = Algorithm::MD5;
-    } else if (algo == "SHA256") {
+    } else if (algo == "sha256") {
       algorithm = Algorithm::SHA256;
-    } else {algorithm = Algorithm::NONE;}
+    } else {
+      algorithm = Algorithm::NONE;
+    }
   }
 }
 
@@ -71,9 +83,9 @@ int Config::get_interval() {
   return interval;
 }
 
-//getter method to check if notifications are enabled
-bool Config::get_noti_enabled() {
-  return notification_enabled;
+//getter method to check if notifications are level
+NotificationLevel Config::get_notification_level() {
+  return notification_level;
 }
 
 //getter method to retrieve the log file path
@@ -92,29 +104,33 @@ Algorithm Config::get_algorithm() {
 }
 
 //setter methods to update configuration parameters
-void Config::update_interval(int new_interval) {
+bool Config::update_interval(int new_interval) {
   interval = new_interval;
+  return true;
 }
 
 //setter method to update the notification setting
-void Config::update_noti_enabled(bool enabled) {
-  notification_enabled = enabled;
+bool Config::update_notification_level(NotificationLevel new_notification_level) {
+  notification_level = new_notification_level;
+  return true;
 }
 
 //setter method to update the log file path
-void Config::update_log_file(string new_log_file) {
+bool Config::update_log_file(string new_log_file) {
   log_file = new_log_file;
+  return true;
 }
 
 //setter method to update the log level
-void Config::update_log_level(LogLevel new_log_level) {
+bool Config::update_log_level(LogLevel new_log_level) {
   log_level = new_log_level;
+  return true;
 }
 
 //setter method to update the hashing algorithm
-void Config::update_algorithm(Algorithm new_algorithm) {
+bool Config::update_algorithm(Algorithm new_algorithm) {
   algorithm = new_algorithm;
+  return true;
 }
 
 Config::~Config() {}
-

@@ -9,8 +9,9 @@ interval:
   check_interval: 10
 
 notifications:
-  # Enable or disable notifications on file change
-  enabled: true
+  # Options: "all", "changes", "none"
+  level: "all"
+
 
 logging:
   # File to store logs of file changes
@@ -21,4 +22,3 @@ logging:
 checksum:
   # Choose checksum algorithm for file comparison: "md5", "sha256", or "none"
   algorithm: "sha256"
-
