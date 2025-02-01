@@ -109,3 +109,24 @@ bool Checksum::computeChecksum_md(const std::string &filePath, std::string *str)
 
     return true; // Return true indicating successful checksum computation
 }
+
+
+bool none(const std::string &filePath, std::string *str) {
+    // Open the file in binary mode
+    std::ifstream file(filePath, std::ios::binary);
+
+    // Check if the file was successfully opened
+    if (!file) {
+        return false; // Return false if the file can't be opened
+    }
+
+    // Read the file contents into a stringstream
+    std::ostringstream result;
+    result << file.rdbuf(); // Read the entire file into the stringstream
+
+    // Convert the file contents to a string and store it in the provided string pointer
+    *str = result.str();
+
+    // Return true indicating successful checksum computation (here it's just the file content as string)
+    return true;
+}
