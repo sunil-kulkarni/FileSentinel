@@ -6,33 +6,41 @@
 #include <thread>  // For std::this_thread::sleep_for
 #include <chrono>  // For std::chrono::seconds
 
-#include <boost/asio.hpp>
-#include <iostream>
-#include <string>
+#include <curl/curl.h>
 
-using boost::asio::ip::tcp;
-
-int req() {
-    try {
-        boost::asio::io_context io_context;
-
-        tcp::resolver resolver(io_context);
-        tcp::resolver::results_type endpoints = resolver.resolve("127.0.0.1", "3001");
-
-        tcp::socket socket(io_context);
-        boost::asio::connect(socket, endpoints);
-
-        std::string message = "Hello, Server!";
-        boost::asio::write(socket, boost::asio::buffer(message));
-
-        char data[512];
-        size_t length = socket.read_some(boost::asio::buffer(data));
-        std::cout << "Received from server: " << std::string(data, length) << std::endl;
-    } catch (std::exception& e) {
-        std::cerr << "Exception: " << e.what() << std::endl;
+void sendRequestToServer(const std::string& serverAddress) {
+    if (serverAddress.empty()) {
+        std::cerr << "Server address cannot be empty!" << std::endl;
+        return;
     }
 
-    return 0;
+    CURL* curl;
+    CURLcode res;
+
+    curl_global_init(CURL_GLOBAL_DEFAULT);  // Initialize libcurl
+    curl = curl_easy_init();
+
+    if (curl) {
+        curl_easy_setopt(curl, CURLOPT_URL, serverAddress.c_str());
+
+        // Optional: Follow redirects if any
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+
+        // Perform the request
+        res = curl_easy_perform(curl);
+
+        // Check for errors
+        if (res != CURLE_OK) {
+            std::cerr << "Request failed: " << curl_easy_strerror(res) << std::endl;
+        } else {
+            std::cout << "Request successfully sent to " << serverAddress << std::endl;
+        }
+
+        // Cleanup
+        curl_easy_cleanup(curl);
+    }
+
+    curl_global_cleanup();
 }
 
 using namespace std;
@@ -56,7 +64,7 @@ int main(int argc, char *argv[]) {
   /*/cs.compute_checksum(p, &temp);/*/
     if (! cs.compare_checksum(p, &checksum)) {
       /*system("notify-send 'File changed'");*/
-      req()
+      sendRequestToServer("http://127.0.0.1:3001");
       cs.compute_checksum(p, &checksum);
     }
     
