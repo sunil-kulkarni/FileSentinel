@@ -8,6 +8,18 @@ add_subdirectory(database)
 
 add_executable(FileSentinel main.cpp)
 
+include(FetchContent)
+
+FetchContent_Declare(
+  Boost
+  GIT_REPOSITORY https://github.com/boostorg/boost.git
+  GIT_TAG        boost-1.83.0
+)
+
+FetchContent_MakeAvailable(Boost)
+
+target_include_directories(FileSentinel PRIVATE ${Boost_SOURCE_DIR})
+
 target_link_libraries(FileSentinel PRIVATE TUI config checksum database)
 
 target_include_directories(FileSentinel PRIVATE
